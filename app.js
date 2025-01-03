@@ -6,6 +6,7 @@ const e = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors');  // Add this import
 
 const app = express()
 app.use(express.json())
@@ -14,6 +15,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')));
 // Set views directory
 app.set('views', path.join(__dirname, 'views'));
+// Add CORS middleware before other middleware
+app.use(cors());
 
 // In-memory storage for tokens and users
 const tokens = new Map()
