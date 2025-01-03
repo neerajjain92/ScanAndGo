@@ -1,0 +1,26 @@
+{
+  "name": "scanandgo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neerajjain92/ScanAndGo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neerajjain92/ScanAndGo/issues"
+  },
+  "homepage": "https://github.com/neerajjain92/ScanAndGo#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "qrcode": "^1.5.4",
+    "uuid": "^11.0.3"
+  }
+}
