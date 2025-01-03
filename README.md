@@ -1,9 +1,4 @@
 # ScanAndGo
-
-Got it! Here's a **concise README.md** focusing only on **setup**, **testing**, and **API endpoints**:
-
----
-
 # QR Code Login System
 
 A simple QR code-based login system built with **Node.js** and **Express**.
