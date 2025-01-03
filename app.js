@@ -4,10 +4,16 @@ const { v4: uuidv4 } = require('uuid');
 const QRCode = require('qrcode');
 const e = require('express');
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const fs = require('fs');
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
+// Set views directory
+app.set('views', path.join(__dirname, 'views'));
 
 // In-memory storage for tokens and users
 const tokens = new Map()
@@ -35,57 +41,15 @@ app.get('/login', (req, res) => {
     const token = uuidv4();
     tokens.set(token, { status: 'pending', userId: null })
 
-    QRCode.toDataURL(token, (err, url) => {
-        if (err) throw err;
-        res.send(`
-             <!DOCTYPE html>
-            <html>
-            <head>
-                <title>QR Code Login</title>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-            </head>
-            <body>
-                <h1>Scan the QR Code to Login</h1>
-                <div id="qrcode"></div>
-                <script>
-                    // Generate QR code
-                    var token = "${token}";
-                    new QRCode(document.getElementById("qrcode"), {
-                        text: token,
-                        width: 256,
-                        height: 256
-                    });
+    // Read the HTML file
+    const htmlContent = fs.readFileSync(path.join(__dirname, 'views', 'login.html'), 'utf8');
+    
+    // Replace a placeholder with the token
+    const modifiedHtml = htmlContent.replace('REPLACE_WITH_TOKEN', token);
+    
+    res.send(modifiedHtml);
 
-                    // Function to check login status using Fetch API
-                    async function checkLogin() {
-                        try {
-                            const response = await fetch('/checkLogin', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ token }),
-                            });
-                            const data = await response.json();
-
-                            if (data.loggedIn) {
-                                window.location.href = '/homepage?phoneNumber=' + data.phoneNumber;
-                            } else {
-                                setTimeout(checkLogin, 2000); // Poll every 2 seconds
-                            }
-                        } catch (error) {
-                            console.error('Error checking login status:', error);
-                            setTimeout(checkLogin, 2000); // Retry on error
-                        }
-                    }
-
-                    // Start polling
-                    checkLogin();
-                </script>
-            </body>
-            </html>
-            `);
-    });
+    // res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
 app.post('/checkLogin', (req, res) => {

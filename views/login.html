@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="left-panel">
+                <h1>Welcome Back</h1>
+                <p class="subtitle">Scan QR code to login securely</p>
+                <div class="qr-container">
+                    <div id="qrcode"></div>
+                </div>
+                <p class="instruction">
+                    1. Open your mobile app<br>
+                    2. Tap Menu or Settings<br>
+                    3. Point your phone to this screen to scan
+                </p>
+            </div>
+            <div class="right-panel">
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure Login</h3>
+                        <p>End-to-end encrypted connection</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Quick Access</h3>
+                        <p>No password needed</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h3>Multi-device</h3>
+                        <p>Access from anywhere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const token = "REPLACE_WITH_TOKEN";
+        new QRCode(document.getElementById("qrcode"), {
+            text: token,
+            width: 200,
+            height: 200
+        });
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/checkLogin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token }),
+                });
+                const data = await response.json();
+
+                if (data.loggedIn) {
+                    window.location.href = '/homepage?phoneNumber=' + data.phoneNumber;
+                } else {
+                    setTimeout(checkLogin, 2000);
+                }
+            } catch (error) {
+                console.error('Error checking login status:', error);
+                setTimeout(checkLogin, 2000);
+            }
+        }
+
+        checkLogin();
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.login-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden;
+    min-height: 600px;
+}
+
+.left-panel {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid #eee;
+}
+
+.right-panel {
+    flex: 1;
+    background: #f8fafc;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    color: #1a1a1a;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.qr-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 40px;
+}
+
+#qrcode {
+    display: inline-block;
+}
+
+.qr-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.instruction {
+    color: #666;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.features {
+    width: 100%;
+}
+
+.feature-item {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feature-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature-item h3 {
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.feature-item p {
+    color: #666;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+    }
+    
+    .left-panel {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+}
